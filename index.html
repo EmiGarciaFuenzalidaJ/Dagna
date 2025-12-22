@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAGNA - Seguros y más seguros</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Favicon clásico -->
+    <link rel="icon" href="assets/img/favicon.ico" sizes="any">
+
+    <!-- PNG favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+
+    <!-- Android / PWA -->
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/img/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/img/android-chrome-512x512.png">
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="assets/img/site.webmanifest">
+
+    <!-- Opcionales pero recomendados -->
+    <meta name="theme-color" content="#1f1f1f">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <style>
+        /* ============================================
+           BRAND COLORS - DAGNA MANUAL DE MARCA
+           ============================================ */
+        :root {
+          /* Primary Colors */
+          --primary-dark: #784E61;
+          --primary-medium: #935370;
+          --primary-light: #D3BBC6;
+          --primary-lighter: #F5D4E3;
+          --primary-accent: #6A394E;
+          
+          /* Secondary Colors - Accent Green */
+          --accent-green: #5FDAB3;
+          --accent-green-bright: #00FFAE;
+          --accent-green-dark: #17C18B;
+          --accent-green-light: #CDFAE6;
+          
+          /* Neutral Colors */
+          --neutral-light: #FEFCF5;
+          --neutral-dark: #222222;
+          
+          /* Application Colors */
+          --background-color: #FEFCF5;
+          --surface-color: #ffffff;
+          --text-color: #222222;
+          --text-light: #784E61;
+          --heading-color: #6A394E;
+          --contrast-color: #ffffff;
+        }
+
+        /* ============================================
+           TYPOGRAPHY - POPPINS
+           ============================================ */
+        :root {
+          --font-primary: "Poppins", sans-serif;
+        }
+
+        /* ============================================
+           SMOOTH SCROLL
+           ============================================ */
+        :root {
+          scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        .header {
+            background-color: var(--surface-color);
+            padding: 25px 0;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(120, 78, 97, 0.1);
+        }
+
+        .logo {
+            max-width: 220px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .navbar {
+            background-color: var(--primary-dark);
+            padding: 0;
+            border-bottom: 3px solid var(--accent-green);
+        }
+
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            color: var(--neutral-light);
+            text-decoration: none;
+            font-family: var(--font-primary);
+            font-weight: 500;
+            font-size: 15px;
+            padding: 18px 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: block;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-green-bright);
+            background-color: rgba(95, 218, 179, 0.1);
+            border-bottom-color: var(--accent-green);
+        }
+
+        .nav-link:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .nav-link:active {
+            background-color: rgba(95, 218, 179, 0.15);
+        }
+
+        /* ============================================
+           HERO CAROUSEL
+           ============================================ */
+        .hero-section {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(106, 57, 78, 0.5), rgba(120, 78, 97, 0.7));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-text {
+            font-family: var(--font-primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--contrast-color);
+            text-align: center;
+            padding: 20px 100px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 0.3s;
+            text-shadow: 2px 2px 15px rgba(34, 34, 34, 0.5);
+            max-width: 1000px;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(95, 218, 179, 0.8);
+            color: var(--neutral-dark);
+            border: none;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 24px;
+            z-index: 10;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .carousel-arrow:hover {
+            background-color: var(--accent-green-bright);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-arrow.left {
+            left: 20px;
+        }
+
+        .carousel-arrow.right {
+            right: 20px;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(254, 252, 245, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .dot.active {
+            background-color: var(--accent-green);
+            transform: scale(1.3);
+            border-color: var(--contrast-color);
+        }
+
+        .dot:hover {
+            background-color: var(--accent-green-light);
+        }
+
+        /* ============================================
+           SEGUROS SECTION
+           ============================================ */
+        .seguros-section {
+            padding: 80px 20px;
+            background-color: var(--background-color);
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--heading-color);
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-subtitle {
+            font-family: var(--font-primary);
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--text-light);
+            margin-bottom: 60px;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .seguro-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 400px;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(120, 78, 97, 0.15);
+            cursor: pointer;
+        }
+
+        .card-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.4s ease;
+        }
+
+        .seguro-card:hover .card-background {
+            transform: scale(1.1);
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(120, 78, 97, 0.5), rgba(106, 57, 78, 0.8));
+            transition: background 0.4s ease;
+        }
+
+        .seguro-card:hover .card-overlay {
+            background: linear-gradient(to bottom, rgba(95, 218, 179, 0.4), rgba(23, 193, 139, 0.7));
+        }
+
+        .seguro-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(95, 218, 179, 0.3);
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+            padding: 40px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .card-title {
+            font-family: var(--font-primary);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--contrast-color);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(34, 34, 34, 0.5);
+        }
+
+        .card-description {
+            color: var(--neutral-light);
+            line-height: 1.6;
+            font-size: 15px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 4px rgba(34, 34, 34, 0.5);
+        }
+
+        .card-btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background-color: var(--accent-green);
+            color: var(--neutral-dark);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            align-self: center;
+        }
+
+        .card-btn:hover {
+            background-color: var(--accent-green-bright);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(95, 218, 179, 0.4);
+        }
+
+        .card-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;      
+            object-position: center;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .seguro-card:hover .card-background img {
+            transform: scale(1.1);
+        }
+        /* ============================================
+           MAPA SECTION
+           ============================================ */
+        .mapa-section {
+            padding: 80px 20px;
+            background-color: var(--primary-lighter);
+            position: relative;
+        }
+
+        .mapa-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            display: block;
+        }
+
+        .mapa-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(120, 78, 97, 0.2);
+            display: block;
+            object-fit: contain;
+        }
+
+        .location-marker {
+            position: absolute;
+            background-color: #ffffff;
+            color: var(--accent-green) !important;
+            font-size: 35px;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+            z-index: 10;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 3px var(--accent-green);
+        }
+
+        .location-marker i {
+            color: var(--accent-green) !important;
+        }
+
+        .location-marker:hover {
+            transform: scale(1.2);
+            background-color: var(--accent-green);
+            box-shadow: 0 0 0 3px #ffffff, 0 0 20px rgba(95, 218, 179, 0.6);
+        }
+
+        .location-marker:hover i {
+            color: #ffffff !important;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        /* Posiciones de marcadores - Distribuidos por Mendoza */
+        .marker-1 { top: 30%; left: 55%; } /* Norte */
+        .marker-2 { top: 50%; left: 50%; } /* Centro */
+        .marker-3 { top: 70%; left: 45%; } /* Sur */
+
+        /* ============================================
+           FORM SECTION
+           ============================================ */
+        .form-section {
+            padding: 80px 20px;
+            background-color: var(--background-color);
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: var(--surface-color);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(120, 78, 97, 0.15);
+        }
+
+        .form-title {
+            font-family: var(--font-primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--heading-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .form-subtitle {
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-control, .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--neutral-light);
+            border: 2px solid var(--primary-light);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-family: var(--font-primary);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 3px rgba(95, 218, 179, 0.2);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-green-dark));
+            border: none;
+            border-radius: 8px;
+            color: var(--neutral-dark);
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(95, 218, 179, 0.4);
+            background: linear-gradient(135deg, var(--accent-green-bright), var(--accent-green));
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background-color: var(--primary-dark);
+            padding: 60px 20px 30px;
+            border-top: 4px solid var(--accent-green);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-family: var(--font-primary);
+            font-size: 1.5rem;
+            color: var(--accent-green);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .footer-section p, .footer-section a {
+            color: var(--neutral-light);
+            line-height: 1.8;
+            text-decoration: none;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-green-bright);
+        }
+
+        .footer-section i {
+            margin-right: 10px;
+            color: var(--accent-green);
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(254, 252, 245, 0.2);
+            color: var(--primary-light);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 992px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+
+            .navbar-nav {
+                flex-wrap: wrap;
+            }
+
+            /* Ajustar posiciones en tablet */
+            .marker-1 { top: 30%; left: 55%; }
+            .marker-2 { top: 50%; left: 50%; }
+            .marker-3 { top: 70%; left: 45%; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-link {
+                padding: 15px 20px;
+                font-size: 14px;
+            }
+
+            .carousel-text {
+                font-size: 2rem;
+                padding: 20px 80px;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .card-title {
+                font-size: 1.5rem;
+            }
+
+            .card-description {
+                font-size: 14px;
+            }
+
+            .cards-container {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 25px;
+            }
+
+            .form-container {
+                padding: 30px 20px;
+            }
+
+            .carousel-arrow {
+                padding: 10px 15px;
+                font-size: 18px;
+            }
+
+            .location-marker {
+                font-size: 28px;
+                width: 40px;
+                height: 40px;
+            }
+
+            /* Mantener posiciones en móvil */
+            .marker-1 { top: 30%; left: 55%; }
+            .marker-2 { top: 50%; left: 50%; }
+            .marker-3 { top: 70%; left: 45%; }
+        }
+
+        @media (max-width: 480px) {
+            .carousel-text {
+                font-size: 1.5rem;
+                padding: 20px 70px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .card-title {
+                font-size: 1.4rem;
+            }
+
+            .card-description {
+                font-size: 13px;
+            }
+
+            .nav-link {
+                padding: 12px 12px;
+                font-size: 12px;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .seguro-card {
+                height: 350px;
+            }
+
+            .location-marker {
+                font-size: 24px;
+                width: 35px;
+                height: 35px;
+            }
+
+            /* Ajuste fino para móviles pequeños */
+            .marker-1 { top: 30%; left: 55%; }
+            .marker-2 { top: 50%; left: 50%; }
+            .marker-3 { top: 70%; left: 45%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <img src="assets/img/Logo.png" alt="DAGNA - Seguros y más seguros" class="logo">
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <ul class="navbar-nav">
+            <li><a href="#hero" class="nav-link">Inicio</a></li>
+            <li><a href="#seguros" class="nav-link">Caución</a></li>
+            <li><a href="#seguros" class="nav-link">Créditos</a></li>
+            <li><a href="#seguros" class="nav-link">Incendio</a></li>
+            <li><a href="#seguros" class="nav-link">Vida</a></li>
+            <li><a href="#contacto" class="nav-link">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Carousel -->
+    <section class="hero-section" id="hero">
+        <div class="carousel-container">
+            <div class="carousel-slide active">
+                <img src="assets/img/Stock1.jpg" alt="Slide 1">
+                <div class="carousel-overlay">
+                    <h1 class="carousel-text">La tranquilidad no se improvisa. Se construye con decisiones bien asesoradas.</h1>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/img/Stock2.jpg" alt="Slide 2">
+                <div class="carousel-overlay">
+                    <h1 class="carousel-text">Protección clara, cercana y profesional para tu presente y futuro.</h1>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/img/Stock3.jpg" alt="Slide 3">
+                <div class="carousel-overlay">
+                    <h1 class="carousel-text">Tu tranquilidad es nuestra prioridad. Asesoramiento honesto y estratégico.</h1>
+                </div>
+            </div>
+
+            <button class="carousel-arrow left" onclick="changeSlide(-1)">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="carousel-arrow right" onclick="changeSlide(1)">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+
+            <div class="carousel-dots">
+                <span class="dot active" onclick="goToSlide(0)"></span>
+                <span class="dot" onclick="goToSlide(1)"></span>
+                <span class="dot" onclick="goToSlide(2)"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seguros Section -->
+    <section class="seguros-section" id="seguros">
+        <h2 class="section-title">Nuestros Seguros</h2>
+        <p class="section-subtitle">Protección diseñada para necesidades reales, con claridad y acompañamiento profesional.</p>
+        <div class="cards-container">
+            <div class="seguro-card">
+                <div class="card-background">
+                    <img src="assets/img/StockMini1.jpg" alt="Caución">
+                </div>
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                    <h3 class="card-title">Caución</h3>
+                    <p class="card-description">
+                        Garantías para contratos y licitaciones. Respaldo profesional para tus compromisos comerciales.
+                    </p>
+                    <a href="#contacto" class="card-btn">Conocé Más</a>
+                </div>
+            </div>
+            <div class="seguro-card">
+                <div class="card-background">
+                    <img src="assets/img/StockMini3.jpg" alt="Seguro de Vida" loading="lazy">
+                </div>
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                    <h3 class="card-title">Vida</h3>
+                    <p class="card-description">
+                        Protección integral para vos y tu familia. Tranquilidad para el presente y el futuro.
+                    </p>
+                    <a href="#contacto" class="card-btn">Conocé Más</a>
+                </div>
+            </div>
+            <div class="seguro-card">
+                <div class="card-background">
+                    <img src="assets/img/StockMini2.jpg" alt="Seguro contra Incendio" loading="lazy">
+                </div>
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                    <h3 class="card-title">Incendio</h3>
+                    <p class="card-description">
+                        Cobertura completa para tu hogar o negocio. Protección ante imprevistos.
+                    </p>
+                    <a href="#contacto" class="card-btn">Conocé Más</a>
+                </div>
+            </div>
+            <div class="seguro-card">
+                <div class="card-background">
+                    <img src="assets/img/StockMini4.jpg" alt="Seguro de Créditos" loading="lazy">
+                </div>
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                    <h3 class="card-title">Créditos</h3>
+                    <p class="card-description">
+                        Protección de operaciones comerciales. Seguridad en tus transacciones financieras.
+                    </p>
+                    <a href="#contacto" class="card-btn">Conocé Más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mapa Section -->
+    <section class="mapa-section" id="ubicacion">
+        <h2 class="section-title">Nuestras Oficinas</h2>
+        <p class="section-subtitle">Estamos cerca tuyo en Mendoza</p>
+        <div class="mapa-container">
+            <img src="assets/img/MZA.png" alt="Mapa de Mendoza">
+            <div class="location-marker marker-1" title="Zona Norte">
+                <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <div class="location-marker marker-2" title="Zona Centro">
+                <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <div class="location-marker marker-3" title="Zona Sur">
+                <i class="bi bi-geo-alt-fill"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="form-section" id="contacto">
+        <div class="form-container">
+            <h2 class="form-title">Solicitar Asesoramiento</h2>
+            <p class="form-subtitle">Contanos tu necesidad y te contactamos para asesorarte</p>
+            <form id="contactForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label" for="tipoSeguro">Tipo de Seguro</label>
+                    <select class="form-select" id="tipoSeguro" name="tipoSeguro" required>
+                        <option value="">Seleccione una opción</option>
+                        <option value="causion">Caución</option>
+                        <option value="creditos">Créditos</option>
+                        <option value="incendio">Incendio</option>
+                        <option value="vida">Vida</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="nombreApellido">Nombre y Apellido</label>
+                    <input type="text" class="form-control" id="nombreApellido" name="nombreApellido" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="razonSocial">Razón Social (opcional)</label>
+                    <input type="text" class="form-control" id="razonSocial" name="razonSocial">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="cuit">CUIT (opcional)</label>
+                    <input type="text" class="form-control" id="cuit" name="cuit" placeholder="XX-XXXXXXXX-X">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="telefono">Teléfono</label>
+                    <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="mensaje">Mensaje</label>
+                    <textarea class="form-control" id="mensaje" name="mensaje" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Enviar Consulta</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>DAGNA</h3>
+                <p>Seguros y más seguros</p>
+                <p style="margin-top: 15px;">Asesoramiento honesto, cercano y estratégico. Protegiendo tu presente y tu futuro.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p><i class="bi bi-telephone"></i> +54 261 123-4567</p>
+                <p><i class="bi bi-envelope"></i> info@dagnaseguros.com.ar</p>
+                <p><i class="bi bi-whatsapp"></i> +54 9 261 456-7890</p>
+            </div>
+            <div class="footer-section">
+                <h3>Ubicación</h3>
+                <p><i class="bi bi-geo-alt"></i> Av. San Martín 1234</p>
+                <p>Ciudad de Mendoza, Argentina</p>
+                <p>Horario: Lun-Vie 9:00 - 18:00</p>
+            </div>
+            <div class="footer-section">
+                <h3>Seguinos</h3>
+                <div class="social-links">
+                    <a href="#"><i class="bi bi-facebook"></i> Facebook</a>
+                    <a href="#"><i class="bi bi-instagram"></i> Instagram</a>
+                    <a href="#"><i class="bi bi-linkedin"></i> LinkedIn</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 DAGNA - Seguros y más seguros. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(n) {
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+                const text = slide.querySelector('.carousel-text');
+                text.style.animation = 'none';
+            });
+            
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            currentSlide = (n + slides.length) % slides.length;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+            
+            setTimeout(() => {
+                const text = slides[currentSlide].querySelector('.carousel-text');
+                text.style.animation = 'fadeInUp 1s ease forwards';
+            }, 100);
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        // Auto-advance carousel
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+
+        // Form submission
+        //function handleSubmit(event) {
+        //    event.preventDefault();
+        //    
+        //    const formData = new FormData(event.target);
+        //    const data = Object.fromEntries(formData);
+            
+            // INSTRUCCIONES PARA CONFIGURAR EL ENVÍO DE EMAIL:
+            // 
+            // Opción 1: Usar un servicio como Formspree o EmailJS
+            // - Formspree: Regístrate en formspree.io y reemplaza la URL
+            // - EmailJS: Configura en emailjs.com y usa su SDK
+            //
+            // Opción 2: Configurar tu propio backend
+            // - Crea un endpoint en tu servidor que reciba el POST
+            // - Reemplaza la URL fetch con tu endpoint
+            //
+            // Ejemplo con Formspree:
+            // fetch('https://formspree.io/f/TU_FORM_ID', {
+            //     method: 'POST',
+            //     body: formData,
+            //     headers: {
+            //         'Accept': 'application/json'
+            //     }
+            // })
+            
+            // Por ahora, solo mostramos los datos en consola
+        //    console.log('Datos del formulario:', data);
+        //    alert('¡Gracias por tu consulta! Te contactaremos pronto para asesorarte.\n\nNOTA: Para que el formulario envíe emails reales, configura un servicio de email siguiendo las instrucciones en el código JavaScript.');
+        //   event.target.reset();
+        // }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remover cualquier foco visual
+                this.blur();
+                
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
